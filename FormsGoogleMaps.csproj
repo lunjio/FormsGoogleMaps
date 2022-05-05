@@ -1,0 +1,93 @@
+﻿<Project Sdk="MSBuild.Sdk.Extras">
+
+	<PropertyGroup Condition=" '$(TargetsToBuild)' == 'All' ">
+		<TargetFrameworks>netstandard2.0;xamarin.ios10;monoandroid12.0</TargetFrameworks>
+	</PropertyGroup>
+
+	<PropertyGroup Condition=" '$(TargetsToBuild)' != 'All' ">
+		<TargetFrameworks Condition=" '$(TargetsToBuild)' == 'Android' ">netstandard2.0;monoandroid12.0;</TargetFrameworks>
+		<TargetFrameworks Condition=" '$(TargetsToBuild)' == 'iOS' ">netstandard2.0;xamarin.ios10</TargetFrameworks>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<AssemblyName>Xamarin.Forms.GoogleMaps</AssemblyName>
+		<RootNamespace>Xamarin.Forms.GoogleMaps</RootNamespace>
+		<PackageId>Xamarin.Forms.GoogleMaps.Updated</PackageId>
+		<Description>Xamarin.Forms Google Maps library forked from https://github.com/amay077/Xamarin.Forms.GoogleMaps and updated to NetStandart 2.0, AndroidX 
+			for Xamarin.Android and Xamarin.iOS.</Description>
+		<DisableFastUpToDateCheck>true</DisableFastUpToDateCheck>
+		<TargetFrameworks>netstandard2.0;xamarin.ios10;monoandroid12.0</TargetFrameworks>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<Compile Remove="Platforms\**\*.cs" />
+		<None Include="Platforms\**\*.cs" />
+		<Compile Update="**\*.xaml.cs" DependentUpon="%(Filename)" />
+	</ItemGroup>
+
+	<ItemGroup Condition=" $(TargetFramework.StartsWith('xamarin.ios')) ">
+		<Compile Include="Platforms\iOS\**\*.cs" />
+		<AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
+			<_Parameter1>Xamarin.Forms.GoogleMaps.Clustering.iOS</_Parameter1>
+		</AssemblyAttribute>
+	</ItemGroup>
+	<ItemGroup Condition=" $(TargetFramework.StartsWith('monoandroid')) ">
+		<Compile Include="Platforms\Android\**\*.cs" />
+		<AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
+			<_Parameter1>Xamarin.Forms.GoogleMaps.Clustering.Android</_Parameter1>
+		</AssemblyAttribute>
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="GoogleApi" Version="4.0.7" />
+		<PackageReference Include="Xamarin.Build.Download" Version="0.11.0" />
+		<PackageReference Include="Xamarin.Forms" Version="5.0.0.2337" />
+		<PackageReference Include="Xamarin.Google.iOS.Maps" Version="6.0.1" />
+	</ItemGroup>
+
+	<ItemGroup Condition="'$(TargetFramework)' == 'monoandroid12.0'">
+		<PackageReference Include="Xamarin.Android.Support.v4">
+		  <Version>28.0.0.3</Version>
+		</PackageReference>
+		<PackageReference Include="Xamarin.AndroidX.Core">
+		  <Version>1.6.0.5</Version>
+		</PackageReference>
+		<PackageReference Include="Xamarin.AndroidX.Legacy.Support.Core.UI">
+		  <Version>1.0.0.13</Version>
+		</PackageReference>
+		<PackageReference Include="Xamarin.AndroidX.Legacy.Support.Core.Utils">
+		  <Version>1.0.0.12</Version>
+		</PackageReference>
+		<PackageReference Include="Xamarin.AndroidX.Legacy.Support.V4">
+		  <Version>1.0.0.12</Version>
+		</PackageReference>
+		<PackageReference Include="Xamarin.AndroidX.VectorDrawable.Animated">
+		  <Version>1.1.0.12</Version>
+		</PackageReference>
+		<PackageReference Include="Xamarin.Google.Android.Material">
+		  <Version>1.4.0.6</Version>
+		</PackageReference>
+		<PackageReference Include="Xamarin.GoogleMapsUtils">
+		  <Version>1.0.1</Version>
+		</PackageReference>
+		<PackageReference Include="Xamarin.GooglePlayServices.Base">
+		  <Version>117.6.0.3</Version>
+		</PackageReference>
+		<PackageReference Include="Xamarin.GooglePlayServices.Basement">
+			<Version>117.6.0.4</Version>
+		</PackageReference>
+		<PackageReference Include="Xamarin.GooglePlayServices.Maps">
+			<Version>117.0.1.3</Version>
+		</PackageReference>
+		<PackageReference Include="Xamarin.GooglePlayServices.Tasks">
+			<Version>117.2.1.3</Version>
+		</PackageReference>
+	</ItemGroup>
+
+	<ItemGroup Condition="'$(TargetFramework)' == 'xamarin.ios10'">
+	  <PackageReference Include="Xamarin.GoogleMapsUtils">
+	    <Version>1.0.1</Version>
+	  </PackageReference>
+	</ItemGroup>
+
+</Project>
